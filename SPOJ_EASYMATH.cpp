@@ -30,7 +30,7 @@ int main ()
                         {
                             if(m%(a+4*d)!=0)
                             {
-                                cnt++;
+                                cnt++; 
                             }
                         }
                     }
