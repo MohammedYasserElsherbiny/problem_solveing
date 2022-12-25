@@ -1,5 +1,7 @@
 #include<iostream>
+#include <bits\stdc++.h>
 #include<fstream>
+#include <vector>
 #include<cstdlib>
 using std::cout;
 using std::cin;
@@ -8,143 +10,156 @@ using std::fstream;
 using std::ofstream;
 using std::ifstream;
 using std::ios;
+using namespace std;
+
+
+
+
+
+
+
 class account_query
 {
 private:
-    char account_number[20];
-    char firstName[10];
-    char lastName[10];
+    string account_number;
+    string firstName;
+    string lastName;
     float total_Balance;
+    //add password
 public:
     void read_data();
-    void show_data();
+    void show_data(account_query temp);
     void write_rec();
     void read_rec();
     void search_rec();
     void edit_rec();
     void delete_rec();
 };
+
+
+vector <account_query> vec;
+
+
+
 void account_query::read_data()
 {
+    account_query temp;
+    string acc,f,l;
+    float t;
     cout<<"\nEnter Account Number: ";
-    cin>>account_number;
+    cin>>acc;
+    temp.account_number=acc;
     cout<<"Enter First Name: ";
-    cin>>firstName;
+    cin>>f;
+    temp.firstName=f;
     cout<<"Enter Last Name: ";
-    cin>>lastName;
+    cin>>l;
+    temp.lastName=l;
     cout<<"Enter Balance: ";
-    cin>>total_Balance;
+    cin>>t;
+    temp.total_Balance=t;
     cout<<endl;
+    vec.push_back(temp);
 }
-void account_query::show_data()
+
+void account_query::show_data(account_query account)
 {
-    cout<<"Account Number: "<<account_number<<endl;
-    cout<<"First Name: "<<firstName<<endl;
-    cout<<"Last Name: "<<lastName<<endl;
-    cout<<"Current Balance: Rs.  "<<total_Balance<<endl;
+    cout<<"Account Number: "<<account.account_number<<endl;
+    cout<<"First Name: "<<account.firstName<<endl;
+    cout<<"Last Name: "<<account.lastName<<endl;
+    cout<<"Current Balance: Rs.  "<<account.total_Balance<<endl;
     cout<<"-------------------------------"<<endl;
 }
 void account_query::write_rec()
 {
-    ofstream outfile;
-    outfile.open("record.bank", ios::binary|ios::app);
+
+
     read_data();
-    outfile.write(reinterpret_cast<char *>(this), sizeof(*this));
-    outfile.close();
+    
 }
 void account_query::read_rec()
 {
-    ifstream infile;
-    infile.open("record.bank", ios::binary);
-    if(!infile)
+    
+    int sz=vec.size();
+    if(sz==0)
     {
-        cout<<"Error in Opening! File Not Found!!"<<endl;
+        cout<<"\nError in Opening! File Not Found!!\n"<<endl;
         return;
     }
+
     cout<<"\n****Data from file****"<<endl;
-    while(!infile.eof())
+    for(int i=0;i<sz;i++)
     {
-        if(infile.read(reinterpret_cast<char*>(this), sizeof(*this))>0)
-        {
-            show_data();
-        }
+        show_data(vec[i]);
     }
-    infile.close();
+    
 }
 void account_query::search_rec()
 {
-    int n;
-    ifstream infile;
-    infile.open("record.bank", ios::binary);
-    if(!infile)
+    int n,count=vec.size();
+    if(count==0)
     {
-        cout<<"\nError in opening! File Not Found!!"<<endl;
+        cout<<"\nError in opening! File Not Found!!\n"<<endl;
         return;
     }
-    infile.seekg(0,ios::end);
-    int count = infile.tellg()/sizeof(*this);
     cout<<"\n There are "<<count<<" record in the file";
     cout<<"\n Enter Record Number to Search: ";
     cin>>n;
-    infile.seekg((n-1)*sizeof(*this));
-    infile.read(reinterpret_cast<char*>(this), sizeof(*this));
-    show_data();
+    show_data(vec[n-1]);
 }
 void account_query::edit_rec()
 {
-    int n;
-    fstream iofile;
-    iofile.open("record.bank", ios::in|ios::binary);
-    if(!iofile)
+    int n,count=vec.size();
+    if(count==0)
     {
-        cout<<"\nError in opening! File Not Found!!"<<endl;
+        cout<<"\nError in opening! File Not Found!!\n"<<endl;
         return;
     }
-    iofile.seekg(0, ios::end);
-    int count = iofile.tellg()/sizeof(*this);
     cout<<"\n There are "<<count<<" record in the file";
     cout<<"\n Enter Record Number to edit: ";
     cin>>n;
-    iofile.seekg((n-1)*sizeof(*this));
-    iofile.read(reinterpret_cast<char*>(this), sizeof(*this));
     cout<<"Record "<<n<<" has following data"<<endl;
-    show_data();
-    iofile.close();
-    iofile.open("record.bank", ios::out|ios::in|ios::binary);
-    iofile.seekp((n-1)*sizeof(*this));
+    show_data(vec[n-1]);
+    
     cout<<"\nEnter data to Modify "<<endl;
     read_data();
-    iofile.write(reinterpret_cast<char*>(this), sizeof(*this));
+
+    vector<account_query> tempacc;
+    for(int i=0;i<vec.size();i++)
+    {
+        if(i==n-1)
+        continue;
+
+        tempacc.push_back(vec[i]);
+    }
+    vec=tempacc;
+    
+    
 }
 void account_query::delete_rec()
 {
-    int n;
-    ifstream infile;
-    infile.open("record.bank", ios::binary);
-    if(!infile)
+    int n,count=vec.size();
+    if(count==0)
     {
-        cout<<"\nError in opening! File Not Found!!"<<endl;
+        cout<<"\nError in opening! File Not Found!!\n"<<endl;
         return;
     }
-    infile.seekg(0,ios::end);
-    int count = infile.tellg()/sizeof(*this);
     cout<<"\n There are "<<count<<" record in the file";
     cout<<"\n Enter Record Number to Delete: ";
     cin>>n;
-    fstream tmpfile;
-    tmpfile.open("tmpfile.bank", ios::out|ios::binary);
-    infile.seekg(0);
-    for(int i=0; i<count; i++)
+    vector<account_query> tempacc;
+    for(int i=0;i<vec.size();i++)
     {
-        infile.read(reinterpret_cast<char*>(this),sizeof(*this));
-        if(i==(n-1))
-            continue;
-        tmpfile.write(reinterpret_cast<char*>(this), sizeof(*this));
+        if(i==n-1)
+        continue;
+
+        tempacc.push_back(vec[i]);
     }
-    infile.close();
-    tmpfile.close();
-    remove("record.bank");
-    rename("tmpfile.bank", "record.bank");
+    vec=tempacc;
+
+    //the delete is not ordered
+
+    
 }
 int main()
 {
@@ -175,6 +190,7 @@ int main()
             break;
         case 4:
             A.edit_rec();
+            //update is not ordred
             break;
         case 5:
             A.delete_rec();
@@ -187,6 +203,9 @@ int main()
             exit(0);
         }
     }
+
+    
+    
     system("pause");
     return 0;
 }
