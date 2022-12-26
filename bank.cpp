@@ -24,6 +24,10 @@ private:
     string account_number;
     string firstName;
     string lastName;
+    string credit_card;
+    string phone_number;
+    int limit;
+    int pin;
     float total_Balance;
     //add password
 public:
@@ -44,7 +48,8 @@ vector <account_query> vec;
 void account_query::read_data()
 {
     account_query temp;
-    string acc,f,l;
+    string acc,f,l,cc,pn;
+    int limit,pin;
     float t;
     cout<<"\nEnter Account Number: ";
     cin>>acc;
@@ -58,6 +63,18 @@ void account_query::read_data()
     cout<<"Enter Balance: ";
     cin>>t;
     temp.total_Balance=t;
+    cout<<"Enter Card Number: ";
+    cin>>cc;
+    temp.credit_card=cc;
+    cout<<"Enter Your Phone Number: ";
+    cin>>pn;
+    temp.phone_number=pn;
+    cout<<"Enter The Limit Number: ";
+    cin>>limit;
+    temp.limit=limit;
+    cout<<"Enter The Pin Code: ";
+    cin>>pin;
+    temp.pin=pin;
     cout<<endl;
     vec.push_back(temp);
 }
@@ -68,14 +85,13 @@ void account_query::show_data(account_query account)
     cout<<"First Name: "<<account.firstName<<endl;
     cout<<"Last Name: "<<account.lastName<<endl;
     cout<<"Current Balance: Rs.  "<<account.total_Balance<<endl;
+    cout<<"Your Phone Number: "<<account.phone_number<<endl;
+    cout<<"Card Number: "<<account.credit_card<<endl;
     cout<<"-------------------------------"<<endl;
 }
 void account_query::write_rec()
 {
-
-
-    read_data();
-    
+    read_data();   
 }
 void account_query::read_rec()
 {
@@ -204,7 +220,6 @@ int main()
         }
     }
 
-    
     
     system("pause");
     return 0;
