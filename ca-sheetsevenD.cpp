@@ -30,7 +30,8 @@ int main ()
             if((i>>j)&1)
             {
                 
-                
+                 
+                 
             }
         }
         if(mx-mn<x)
