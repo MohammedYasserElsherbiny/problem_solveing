@@ -33,11 +33,7 @@ public:
     //add password
     void read_data();
     void show_data(account_query temp);
-    void write_rec();
     void read_rec();
-    void search_rec();
-    void edit_rec();
-    void delete_rec();
 };
 vector <account_query> vec;
 
@@ -51,7 +47,14 @@ class bills : public account_query
     vector <int> BillsInAccount;
     void GenerateBills ()
     {
-        cout<<"\n Enter Record Number to see taxes: \n";
+        int count=vec.size();
+        if(count==0)
+        {
+            cout<<"\nError in opening! File Not Found!!\n"<<endl;
+            return;
+        }
+        cout<<"\n There are "<<count<<" record in the file";
+        cout<<"\n Enter Record Number to Search: ";
         cin>>n;
         b%=15;
         if(b==0)
@@ -94,9 +97,10 @@ class bills : public account_query
             {
                 if(sumOfBills<=vec[n-1].total_Balance)
                 {
-                   total_Balance-=sumOfBills;
+                   vec[n-1].total_Balance-=sumOfBills;
                    cout<<"You Paied All Your Bills!! \n";
                    cout<<"Your Total Balance Is "<<vec[n-1].total_Balance<<'\n'; 
+                   break;
                 }
                 else 
                 {
@@ -111,6 +115,7 @@ class bills : public account_query
                         }
                         else
                         {
+                            tempsum-=BillsInAccount[i];
                             cout<<"You Can Pay "<<cnt<<" Bills.\n";
                             cout<<"DO You Want To Pay Them?\n";
                             cout<<"Yes/No\n";
@@ -128,6 +133,7 @@ class bills : public account_query
                             else if(str=="yes")
                             {
                                 vec[n-1].total_Balance-=tempsum;
+                                return ;
                             }
                             else
                             {
@@ -152,7 +158,7 @@ class bills : public account_query
     }
 };
 
-class see_taxes :public bills
+class see_taxes :public account_query
 {
     private:
 	
@@ -160,15 +166,17 @@ class see_taxes :public bills
     string tempAcc;
 		
     public:
-
-    see_taxes()
+    void getTaxes()
     {
-
-    }
-    void get()
-    {
-        int n;
-        cout<<"\n Enter Record Number to see taxes: \n";
+        
+        int n,count=vec.size();
+        if(count==0)
+        {
+            cout<<"\nError in opening! File Not Found!!\n"<<endl;
+            return;
+        }
+        cout<<"\n There are "<<count<<" record in the file";
+        cout<<"\n Enter Record Number to Search: ";
         cin>>n;
         cout << "\nenter your pin then your account number : \n";
         cin>>tempPin>>tempAcc;
@@ -178,11 +186,11 @@ class see_taxes :public bills
             {
                 if (vec[n-1].total_Balance <= 50000)
                 {
-                    cout << "\ntaxes for this account is : \n" << (vec[n-1].total_Balance * 0.10);
+                    cout << "\ntaxes for this account is : " << (vec[n-1].total_Balance * 0.10)<<'\n';
                 }
                 else
                 {
-                    cout << "\ntaxes for this account is : \n" << (vec[n-1].total_Balance * 0.15);
+                    cout << "\ntaxes for this account is : " << (vec[n-1].total_Balance * 0.15)<<'\n';
                 }
             }
             else 
@@ -204,7 +212,7 @@ class see_taxes :public bills
                 }
                 if(tempanswer=="yes")
                 {
-                    get();
+                    getTaxes();
                     break;
                 }
                 else if(tempanswer=="no")
@@ -225,8 +233,248 @@ class see_taxes :public bills
 };
 
 
+class exchange 
+{
+public: 
+    void Exchange()
+    {
+        double ex, egp, res;
+        const double sr = 6.5;
+        const double $ = 24.73;
+        const double uae = 6.73;
+        const double euro = 26.29;
+        const double kwd = 80.79;
+        cout << "You are now in the foreign currency exchange list " << endl;
+        cout << "--------------------------------------------------" << endl;
+        cout << "Enter the amount of money you want to exchange " << endl;
+        cin >> egp;
+        cout << "USD--> 1 " << endl;
+        cout << "EURO--> 2 " << endl;
+        cout << "UAE--> 3 " << endl;
+        cout << "SAR--> 4 " << endl;
+        cout << "KWD--> 5" << endl;
+        cin >> ex;
+        if (ex == 1)
+        {
+            res = egp / $;
+            cout << " Your amount of money now in Dollars = " << res << endl;
+        }
+        else if (ex == 2)
+        {
+            res = egp / euro;
+            cout<<" Your amount of money now in EUROs = " << res << endl;
+        }
+        else if (ex == 3)
+        {
+            res = egp / uae;
+            cout << "Your amount of money now in UAE dirham = " << res << endl;
+        }
+        else if (ex == 4)
+
+        {
+            res = egp / sr;
+            cout << "Your amount of money now in Saudi riyal = " << res << endl;
+        }
+        else if(ex==5)
+        {
+            res = egp / kwd;
+            cout << "Your amount of money now in Kuwaiti Dinar = " << res << endl;
+
+        }
+        else
+        {
+            cout<<"Invaild Input \n";
+        }
+    }
+};
 
 
+class expenses : public account_query
+{
+    public: 
+    void Expenses()
+    {
+        double ep=0.0, Withdrawal, deposit=0.0, number;
+        const int limit_wd = 50000;
+        const int limit_dp = 100000;
+        int count=vec.size(),n;
+        if(count==0)
+        {
+            cout<<"\nError in opening! File Not Found!!\n"<<endl;
+            return;
+        }
+        cout<<"\n There are "<<count<<" record in the file";
+        cout<<"\n Enter Record Number to Search: ";
+        cin>>n;
+        
+        cout << "Enter 1 for Withdrawal Or 2 for Deposit " << endl;
+        cin >> number;
+        if (number == 1)
+        {
+            cout << "Enter the amount of money you want to withdraw " << endl;
+            cin >> Withdrawal;
+            if (Withdrawal <= limit_wd&&vec[n-1].total_Balance>=Withdrawal)
+            {
+                cout << "successful operation " << endl;
+                vec[n-1].total_Balance-=Withdrawal;
+            }
+            else
+            {
+                cout << "ERROR! You entered a number is greater than the specified " << endl;
+            }
+        }
+        else if(number==2)
+        {
+            cout << "Enter the amount of money you want to deposit " << endl;
+            cin >> deposit;
+            if (deposit <= limit_dp)
+            {
+                cout << "successful operation " << endl;
+                vec[n-1].total_Balance+=deposit;
+            }
+            else
+            {
+                cout << "ERROR! You entered a number is greater than the specified please try again" << endl;
+            }
+        }
+        else
+        {
+            cout<<"\n Invaild Input\n";
+        }	
+    }
+};
+
+class Loan
+{
+protected:
+    int currentDay,currentMonth,currentYear,paymentDay,paymentMonth,paymentYear;
+    float loan,taxes,monthlypayment;
+public:
+  
+    void read_loan()
+    {
+        cout << "The curent day :" << endl;
+        cin >> currentDay;
+        cout << "The curent month :" << endl;
+        cin >> currentMonth;
+        cout << "Enter the curent year :" << endl;
+        cin >>currentYear ;
+        cout << "The payment day :" << endl;
+        cin >> paymentDay;
+        cout << "The payment month :" << endl;
+        cin >> paymentMonth;
+        cout << "Enter the payment year :" << endl;
+        cin >> paymentYear;
+        int l;
+        cout << "The cash you want to laon it :" << endl;
+        cin >> l;
+        loan = l;
+        cout << "The taxes will added :" << endl;
+        taxes =0.10;
+        int numyears = paymentYear - currentYear;
+        int nummonths = 12;    
+        monthlypayment = (loan+(loan * taxes)) / (numyears * nummonths);
+        show_loan();
+    }
+  
+    void show_loan()
+    {
+        cout << "******The Curent Date :" << currentDay<< " / " << currentMonth << " / " << currentYear << " ******" << endl;
+        cout << "******The Payment Date :" << paymentDay << " / " << paymentMonth << "/ " << paymentYear  << " ******" << endl;
+        cout << "******The Loan taken by the custmor :" << loan << " ******" << endl;
+        cout << "******The Taxes added to the loan " << taxes * 100 << "%" << " ******" << endl;
+        cout << "******The Montly Payment : " << monthlypayment << " ******" << endl;
+    } 
+
+
+};
+
+class Transaction : public account_query
+{
+protected :
+    int deposit,withdraw,n;
+
+public :
+
+
+    void trans()
+    {
+        int choice;
+        cout<<"deposit--> 1\nwithdraw--> 2\n";
+        cin>>choice;
+        if(choice==1)
+        {
+            read_Deposit();
+        }
+        else if(choice==2)
+        {
+            read_withdraw();
+        }
+        else
+        {
+            cout<<"Invalid Input\n";
+        }
+    }
+
+    void read_Deposit()
+    {
+        int count=vec.size();
+        if(count==0)
+        {
+            cout<<"\nError in opening! File Not Found!!\n"<<endl;
+            return;
+        }
+        cout<<"\n There are "<<count<<" record in the file";
+        cout<<"\n Enter Record Number to Search: ";
+        cin>>n;
+
+        int d;
+        cout << " ********Enter the number you want to deposit : ************" << endl;
+        cin >> d;
+        deposit = d;
+        vec[n-1].total_Balance = vec[n-1].total_Balance + deposit;
+        show_Deposit();
+    }
+    void show_Deposit()
+    {
+        cout << " ******The number you have entered : " << deposit << "******" << endl;
+        cout << " ******The Total Balance :" << vec[n-1].total_Balance << "******" << endl;
+    }
+    void read_withdraw()
+    {
+        int w;
+        cout << "******The number you want to withdraw :******" << endl;
+        cin >> w;
+        withdraw = w;
+        if (w <= vec[n-1].total_Balance)
+        {
+            vec[n-1].total_Balance = vec[n-1].total_Balance - w;
+        }
+        else
+            cout << " you dont have enogh money " << endl;
+        show_withdraw();
+    }
+    void show_withdraw()
+    {
+        cout << "******The number you withdrawd :" << withdraw << "******" << endl;
+        cout << "******The Total balance : " << vec[n-1].total_Balance << "******" << endl;
+    }
+
+};
+
+class bank : public expenses, public exchange,public Loan,public Transaction
+{
+    public:
+    bank()
+    {
+        cout<<"\n\tWelcom To The Bank :)\n";
+    }
+
+    ~bank ()
+    {
+        cout<<"\n\tGoodbye <:\n";
+    }
+};
 
 void account_query::read_data()
 {
@@ -270,12 +518,9 @@ void account_query::show_data(account_query account)
     cout<<"Current Balance: Rs.  "<<account.total_Balance<<endl;
     cout<<"Your Phone Number: "<<account.phone_number<<endl;
     cout<<"Card Number: "<<account.credit_card<<endl;
+    //update
     cout<<"-------------------------------"<<endl;
 }
-// void account_query::write_rec()
-// {
-//     read_data();   
-// }
 void account_query::read_rec()
 {
     
@@ -293,87 +538,23 @@ void account_query::read_rec()
     }
     
 }
-void account_query::search_rec()
-{
-    int n,count=vec.size();
-    if(count==0)
-    {
-        cout<<"\nError in opening! File Not Found!!\n"<<endl;
-        return;
-    }
-    cout<<"\n There are "<<count<<" record in the file";
-    cout<<"\n Enter Record Number to Search: ";
-    cin>>n;
-    show_data(vec[n-1]);
-}
-void account_query::edit_rec()
-{
-    int n,count=vec.size();
-    if(count==0)
-    {
-        cout<<"\nError in opening! File Not Found!!\n"<<endl;
-        return;
-    }
-    cout<<"\n There are "<<count<<" record in the file";
-    cout<<"\n Enter Record Number to edit: ";
-    cin>>n;
-    cout<<"Record "<<n<<" has following data"<<endl;
-    show_data(vec[n-1]);
-    
-    cout<<"\nEnter data to Modify "<<endl;
-    read_data();
-
-    vector<bills> tempacc;
-    for(int i=0;i<vec.size();i++)
-    {
-        if(i==n-1)
-        continue;
-
-        tempacc.push_back(vec[i]);
-    }
-    vec=tempacc;
-    
-    
-}
-void account_query::delete_rec()
-{
-    int n,count=vec.size();
-    if(count==0)
-    {
-        cout<<"\nError in opening! File Not Found!!\n"<<endl;
-        return;
-    }
-    cout<<"\n There are "<<count<<" record in the file";
-    cout<<"\n Enter Record Number to Delete: ";
-    cin>>n;
-    vector<bills> tempacc;
-    for(int i=0;i<vec.size();i++)
-    {
-        if(i==n-1)
-        continue;
-
-        tempacc.push_back(vec[i]);
-    }
-    vec=tempacc;
-
-    //the delete is not ordered
-
-    
-}
 int main()
 {
-    see_taxes A;
+    bank A;
     int choice;
+    bool f=true;
     cout<<"***Acount Information System***"<<endl;
-    while(true)
+    while(f)
     {
         cout<<"Select one option below ";
         cout<<"\n\t1-->Add record to file";
         cout<<"\n\t2-->Show record from file";
-        cout<<"\n\t3-->Search Record from file";
-        cout<<"\n\t4-->Update Record";
-        cout<<"\n\t5-->Delete Record";
-        cout<<"\n\t6-->Quit";
+        cout<<"\n\t3-->See Taxes";
+        cout<<"\n\t4-->See Bills";
+        cout<<"\n\t5-->Expenses";
+        cout<<"\n\t6-->Exchange";
+        cout<<"\n\t7-->Loan Services";
+        cout<<"\n\t8-->Quit";
         cout<<"\nEnter your choice: ";
         cin>>choice;
         switch(choice)
@@ -385,30 +566,27 @@ int main()
             A.read_rec();
             break;
         case 3:
-            A.search_rec();
+            A.getTaxes();
             break;
         case 4:
-            A.edit_rec();
-            //update is not ordred
+            A.PayBills();
             break;
         case 5:
-            A.delete_rec();
+            A.Expenses();
+            break;
+        case 6:
+            A.Exchange();
             break;
         case 7:
-            A.get();
+            A.read_loan();
             break;
         case 8:
-            A.PayBills();
-        case 6:
-            exit(0);
+            f=false;
             break;
         default:
             cout<<"\nEnter corret choice";
-            exit(0);
+            f=false;
         }
     }
-
-    
-    system("pause");
     return 0;
 }
