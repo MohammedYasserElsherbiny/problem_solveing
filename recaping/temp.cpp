@@ -67,8 +67,7 @@ public:
 		accountBalance = 20000.00;
 		branch = "branch name";
 		amount = 20000;
-		oldPass = 1234
-			;
+		oldPass = 1234;
 	}
 
 };
@@ -351,7 +350,7 @@ int main()
 			}
 			else
 			{
-				cout<<"Invaild Input\n";
+				cout<<"Invalid Input, please try again\n";
 			}
 			//==================================================================================================    
 
