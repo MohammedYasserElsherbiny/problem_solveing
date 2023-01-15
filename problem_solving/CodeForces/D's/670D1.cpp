@@ -4,15 +4,13 @@
 using namespace std;
 
 int n,k;
-vector<int> a(n);
-vector<int> b(n);
 
-bool solve (int mid)
+bool solve (int mid,vector<int> a,vector<int> b)
 {
-    int tempk=k;
+    ll tempk=k;
     for(int i=0;i<n;i++)
     {
-        int cost=mid*a[i];
+        ll cost=mid*a[i];
         if(cost>b[i])
         {
             int temp=cost-b[i];
@@ -34,16 +32,19 @@ bool solve (int mid)
 int main ()
 {
     FIO
-    cout<<"H";
+    //cout<<"H";
 
     cin>>n>>k;
+    vector<int> a(n);
+    vector<int> b(n);
     for(int i=0;i<n;i++) cin>>a[i];
     for(int i=0;i<n;i++) cin>>b[i];
-    int lo=0 , hi=INT_MAX,mid,ans; 
-    while (lo<=hi)
+    int mxb=*max_element(b.begin(),b.end());
+    ll lo=0 , hi=(mxb+k)+1,mid,ans=0; 
+    while (lo<=hi&&hi-lo!=1)
     {
         mid=lo+(hi-lo)/2;
-        if(solve(mid))
+        if(solve(mid,a,b))
         {
             ans=mid;
             lo=mid;
