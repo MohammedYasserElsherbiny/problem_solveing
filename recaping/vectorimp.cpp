@@ -48,7 +48,7 @@ class Vector
 
 int main ()
 {
-   FIO;
+   //FIO;
    Vector vec;
    vec.pushback(8);
    cout<<vec[0]<<'\n';

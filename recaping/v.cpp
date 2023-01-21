@@ -9,7 +9,8 @@ class Vector{
 private:
     int* m_data;
     int m_size, m_capacity;
-    void expand(){
+    void expand()
+    {
         int *new_data = new int[m_capacity * 2];
         memcpy(new_data, m_data, m_size * sizeof(int));
         delete[] m_data;
@@ -17,7 +18,8 @@ private:
         m_capacity *= 2;
     }
     
-    void shrink(){
+    void shrink()
+    {
         int *new_data = new int[m_capacity / 2];
         memcpy(new_data, m_data, m_size * sizeof(int));
         delete[] m_data;
@@ -26,33 +28,38 @@ private:
     }
 
 public:
-    Vector(){
+    Vector()
+    {
         m_size = 0;
         m_capacity = 4;
         m_data = new int[4];
     }
 
-    void pushBack(int x){
+    void pushBack(int x)
+    {
         if(m_size == m_capacity)
             expand();
         m_data[m_size++] = x;
     }
-    void popBack(){
+    void popBack()
+    {
         m_size--;
         if(m_size*2 < m_capacity && m_capacity>4)
             shrink();
     }
-    int size(){
+    int size()
+    {
         return m_size;
     }
 
-    int& operator[](int index){
+    int& operator[](int index)
+    {
         return m_data[index];
     }
 };
 
 int main(){
-    FIO
+    //FIO
 
     Vector vec;
 
