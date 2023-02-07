@@ -11,14 +11,18 @@ int main ()
 
     string str;
     cin>>str;
+    int cnt=0;
     for(int i=0;i<str.size();i++)
     {
-        if(str[i]!='7'&&str[i]!='4')
+        if(str[i]=='4'||str[i]=='7')
         {
-            cout<<"NO";
-            return 0;
+            cnt++;
         }
     }
-    cout<<"YES";
+    if(cnt==4||cnt==7)
+    {
+        cout<<"YES";
+    }
+    else cout<<"NO";
 
 }
