@@ -43,17 +43,10 @@ class d : public b, public c
 
 int main ()
 {
-	d a;
-	d b,d,c;
-
-
-
-
 	
-	a.a=1;
-	b.a=2;
-	c.a=3;
-	d.a=4;
+	int temp=1;
+	char ch='1';
 
+	if(temp==ch ) cout<<"fff";
 	
 }
