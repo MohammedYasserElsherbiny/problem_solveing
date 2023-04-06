@@ -70,12 +70,6 @@ int main ()
                 }
             }
 
-
-
-
-
-
-
             // else if()
             // else if(nextTempChar==vec[i-1][prevSz-1]&&temp!=1)
             // {
@@ -86,8 +80,6 @@ int main ()
             //         if(vec[it][prevSz-1])
             //     }
             // }
-
-
         }
 
         

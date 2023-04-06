@@ -1,50 +1,37 @@
 #include <iostream>
-#include <bits/stdc++.h>
+#include<vector>
 using namespace std;
-class shape
-{
-protected:
-	float area;
-public:
-	void Get_area()
-	{
-		cout << "lll";
-	}
-};
-class shape_2d:public shape
-{
-protected:
-	float par;
-
-public:
-	void Get_par()
-	{
-
-	}
-
-};
- class square:public shape_2d
- {
- private:
-	 float l;
- public:
-     void Get_par()
-		 {
-			 cout << "par of square" << par;
-		 }
-	 square(float L)
-	 {
-		 l = L;
-		 par = l * 4;
-		 area = pow(l, 2);
-		 
-		 void Get_par();
-	 }
-	
-
- };
+#define FIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 int main()
 {
-	square ss(1);
-	
+    FIO;
+
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        vector <int> vec(n), pos(n + 1), ans;
+        for (int i = 0; i < n; i++)
+        {
+            cin >> vec[i];
+            pos[vec[i]] = i;
+        }
+
+        int en = n;
+        for (int i = n; i >= 1; i--)
+        {
+            if (pos[i] >= en)
+            {
+                continue;
+            }
+            for (int j = pos[i]; j < en; j++)
+            {
+                cout << vec[j] << ' ';
+            }
+            en = pos[i];
+        }
+        cout << '\n';
+    }
 }
