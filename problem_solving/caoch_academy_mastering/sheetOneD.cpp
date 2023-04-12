@@ -16,11 +16,13 @@ int main ()
         cin>>vec[i];
     }
     vector <int> ans1,ans2,ans3;
+    ans3.push_back(0);
     for(int i=0;i<n;i++)
     {
+        
         if(vec[i]==0)
         {
-            ans3.push_back(vec[i]);
+            continue;
         }
         else if(vec[i]>0)
         {
