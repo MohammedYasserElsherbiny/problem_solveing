@@ -21,7 +21,8 @@ int main ()
     }
     char mx=*max_element(vec.begin(),vec.end());
     int cnt=0;
-    for(int i=0;i<n;i++)
+    vector <char> tt(n-1);
+    for(int i=vec.size()-1;i>=0;i--)
     {
         char ch=vec[i];
         if(vec[i]==mx&&cnt<=0) 
@@ -30,7 +31,13 @@ int main ()
             continue; 
 
         }
-        cout<<vec[i];
+        tt[i]=vec[i];
+        
+    }
+    for(int i=0;i<n;i++)
+    {
+        if(tt[i]<='z'&&tt[i]>='a')
+        cout<<tt[i];
     }
 
     
