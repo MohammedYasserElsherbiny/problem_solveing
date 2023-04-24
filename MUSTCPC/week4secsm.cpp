@@ -20,7 +20,7 @@ using namespace std;
         1- The domain is large      2- Negative numbers (can work with a trick)
         3- Float numbers            4- The elements not even numbers
 
-        The Solution : Frequency .....
+        The Solution : Frequency map 
 
         ======================================================================================================================
 
@@ -52,18 +52,71 @@ using namespace std;
 
         2- The intersection:
 
-        Array[r]++      Array[l+1]--   ## pre-processing
+        Array[l]++      Array[r+1]--   ## pre-processing
 
 
         
 
 */
 
+//  4 4 5 1 2
+// freq[7]  
+// cnt++
+// freq.push_back     ------->     freq[5]   ------>   freq[element]++;
+// freq [vec[i]]++
+// vector  name (7,0)    
 
 
+/*
+    int n=1e9;
+    int cnt=0,cnt2,cnt3;
+    for(------)
+    {
+        if -->5  cnt++;
+    }
 
+    print cnt  O(mn)   
+
+    print freq[5]  O(1)
+
+
+     # # # # # 
+     - - - -
+       - - - -     
+*/
 int main ()
 {
     FIO
+
+    int n;
+    cin>>n;
+    vector<int> vec(n+1),prefixsum(n+5);
+
+    for(int i=1;i<=n;i++)
+    {
+        cin>>vec[i];
+    }
+
+    prefixsum[0]=vec[0];
+
+    for(int i=1;i<=n;i++)
+    {
+        prefixsum[i]=vec[i]+prefixsum[i-1];
+    }
+
+    int q;
+    cin>>q;
+    while (q--)
+    {
+        int i , j;
+        cin>>i>>j;
+
+        i++,j++;
+
+        cout<<prefixsum[j]-prefixsum[i-1]<<'\n';
+
+    }
+    
+
     
 }
