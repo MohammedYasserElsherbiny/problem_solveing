@@ -1,11 +1,13 @@
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
+#include <iostream>
 #define ll long long
 #define FIO ios_base::sync_with_stdio(false), cout.tie(nullptr); cin.tie(nullptr);
 using namespace std;
 const int N = 1e5+5;
 const ll mod = 1e9+7;
 
-class Vector{
+class vector{
+    
 private:
     int* m_data;
     int m_size, m_capacity;
@@ -28,20 +30,20 @@ private:
     }
 
 public:
-    Vector()
+    vector()
     {
         m_size = 0;
         m_capacity = 4;
         m_data = new int[4];
     }
 
-    void pushBack(int x)
+    void push_back(int x)
     {
         if(m_size == m_capacity)
             expand();
         m_data[m_size++] = x;
     }
-    void popBack()
+    void pop_back()
     {
         m_size--;
         if(m_size*2 < m_capacity && m_capacity>4)
@@ -50,6 +52,12 @@ public:
     int size()
     {
         return m_size;
+    }
+    bool empty ()
+    {
+        if(m_size==0)
+            return true;
+        return false;
     }
 
     int& operator[](int index)
@@ -61,17 +69,20 @@ public:
 int main(){
     //FIO
 
-    Vector vec;
+    vector vec;
 
-    vec.pushBack(15);
-    vec.pushBack(10);
-    vec.pushBack(23);
-    vec.pushBack(8);
-    vec.pushBack(26);
-    vec.pushBack(56);
-    vec.pushBack(56);
-    vec.pushBack(7);
-    vec.popBack();
+    
+
+    vec.push_back(15);
+    vec.push_back(10);
+    vec.push_back(23);
+    vec.push_back(8);
+    vec.push_back(26);
+    vec.push_back(56);
+    vec.push_back(56);
+    cout<<vec.empty()<<' ';
+    vec.push_back(7);
+    vec.pop_back();
 
 
     for(int i=0; i<vec.size(); i++){
