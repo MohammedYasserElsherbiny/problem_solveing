@@ -17,49 +17,31 @@ int main ()
         int n;
         cin>>n;
         vector<int> vec(n);
-        map<int,bool>mp;
+        map<int,int> pos;
+        map<int,bool>vis;
         vector<int> nw;
-        //int mx=vec[0];
+        int mx=n,end;
         for(int i=0;i<n;i++)
         {
             cin>>vec[i];
-            mp[vec[i]]=1;
-            
-            //if(i>0&&vec[i]>mx) mx=vec[i];
+            pos[vec[i]]=i;
         }
-        int mx;
-        auto it=mp.end();
-        it--;
-        int tempn=n;
-        mx= (*it).first;
-        while(tempn!=0)
+
+        for(int i=n;i>=1;i--)
         {
-            for(int i=tempn-1;i>=0;i--)
+            if(pos[i]>=mx)
             {
-                if(mx==vec[i])
-                {
-                    for(int j=i;j<tempn;j++)
-                    {
-                        nw.push_back(vec[j]);
-                        
-                    }
-                    tempn=n-nw.size();
-                }
-                mx=(*it).first;
+                continue;
             }
-        }
-        
-
-
-
-    
-    
-        for(int i=0;i<n;i++)
-        {
-            cout<<nw[i]<<' ';
+            for(int j=pos[i];j<mx;j++)
+            {
+                cout<<vec[j]<<' ';
+            }
+            mx=pos[i];
+            
         }
         cout<<'\n';
-
+      
     }
 
 }
