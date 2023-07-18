@@ -14,17 +14,17 @@ int main ()
     cin>>n>>s;
 
     //map<pair<int,int>,char> ds;
-    map<pair<int,char>,int> mp;
-    map <int,pair<pair<int,char>,int>> ans;
-    for(int i=0;i<n;i++)
+    map<pair<ll,char>,ll> mp;
+    map <ll,pair<pair<ll,char>,ll>> ans;
+    for(ll i=0;i<n;i++)
     {
         char d;
-        int p ,q;
+        ll p ,q;
         cin>>d>>p>>q;
 
         if(d!='B'&&d!='S') continue;
 
-        pair <int,char> temp;
+        pair <ll,char> temp;
 
         temp.first=p;
         temp.second=d;
@@ -34,7 +34,7 @@ int main ()
         
     }
 
-    vector <int> stS,stB;
+    vector <ll> stS,stB;
 
     for(auto par: mp)
     {
@@ -55,25 +55,25 @@ int main ()
     sort(stB.begin(),stB.end());
 
 
-    //int i=0;
+    //ll i=0;
 
     //auto itS=stS.begin(),itB=stB.begin();
 
     
 
-    for(int i=0;i<2*s;i++)
+    for(ll i=0;i<2*s;i++)
     {
         //if(i==2*s) break;
 
 
 
-        if(i>=s&&!stB.empty())
+        if(i>=s&&!stB.empty()&&i%s<stB.size())
         {
             cout<<ans[stB[i%s]].first.second<<' '<<ans[stB[i%s]].first.first<<' '<<ans[stB[i%s]].second<<'\n';
             //itB++;
             //cout<<par.first.second<<' '<<par.first.first<<' '<<par.second<<'\n';
         }
-        else if (i<s&&!stS.empty())
+        else if (i<s&&!stS.empty()&&i%s<stS.size())
         {
             cout<<ans[stS[i%s]].first.second<<' '<<ans[stS[i%s]].first.first<<' '<<ans[stS[i%s]].second<<'\n';
             //itS++;
