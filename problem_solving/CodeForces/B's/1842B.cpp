@@ -107,7 +107,9 @@ int main ()
             if(!st3.empty())
             if(sum|st3.top()<=x)
             {
-                sum|=st3.top();
+                sum|=st3.top(
+                    
+                );
                 st3.pop();
             }
 
