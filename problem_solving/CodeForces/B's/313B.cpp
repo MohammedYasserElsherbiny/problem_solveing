@@ -21,6 +21,7 @@ int main ()
 
         vec.push_back(cnt);
     }
+    //how much pairs that Si=Si+1
     int m;
     cin>>m;
     while (m--)
