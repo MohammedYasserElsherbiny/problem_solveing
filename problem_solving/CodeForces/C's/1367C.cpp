@@ -9,10 +9,8 @@ int main ()
 
 {
     FIO
-
     int t;
     cin>>t;
-
     while(t--)
     {
         int n,k;
@@ -20,11 +18,9 @@ int main ()
         string str;
         cin>>str;
         //input
-
         vector<int> pref(n+2,-1);
         vector<int> suf(n+2,-1);
         //creating prefix and suffix array
-
         if(str[0]=='1')
         {
             pref[0]=0;
@@ -34,7 +30,6 @@ int main ()
             suf[n-1]=n-1;
         }
         //initiating the basic values for the prefix and suffix array
-
         for(int i=1;i<n;i++)
         {
             if(str[i]=='1')
@@ -47,7 +42,6 @@ int main ()
             }
         }
         //prefix array operation
-
         for(int i=n-2;i>=0;i--)
         {
             if(str[i]=='1')
@@ -60,10 +54,8 @@ int main ()
             }
         }
         //suffix array operation
-
         int ans=0,temp1,temp2;
         //temp1 and temp2 is the difference values
-        
         for(int i=0;i<n;i++)
         {
             temp1=INT_MAX;
